@@ -18,7 +18,7 @@ INSERT OR IGNORE INTO locations (id, parent_id, location_type, name_km, name_en,
 ('loc-mondulkiri', NULL, 'province', 'មណ្ឌលគិរី', 'Mondulkiri', '蒙多基里'),
 ('loc-ratanakiri', NULL, 'province', 'រតនគិរី', 'Ratanakiri', '拉达那基里'),
 ('loc-stung-treng', NULL, 'province', 'ស្ទឹងត្រែង', 'Stung Treng', '上丁'),
-('loc-kratié', NULL, 'province', 'ក្រចេះ', 'Kratie', '桔井'),
+('loc-kratie', NULL, 'province', 'ក្រចេះ', 'Kratie', '桔井'),
 ('loc-takeo', NULL, 'province', 'តាកែវ', 'Takeo', '茶胶'),
 ('loc-kampong-speu', NULL, 'province', 'កំពង់ស្ពឺ', 'Kampong Speu', '磅士卑'),
 ('loc-kampong-chhnang', NULL, 'province', 'កំពង់ឆ្នាំង', 'Kampong Chhnang', '磅清扬'),
@@ -39,8 +39,7 @@ INSERT OR IGNORE INTO locations (id, parent_id, location_type, name_km, name_en,
 ('loc-praek-pnov', 'loc-phnom-penh', 'district', 'ព្រែកព្នៅ', 'Praek Pnov', '北桥区'),
 ('loc-chamkar-leu', 'loc-phnom-penh', 'district', 'ចំការលើ', 'Chamkar Leu', '上朗区'),
 ('loc-dangkao', 'loc-phnom-penh', 'district', 'ដង្កោ', 'Dangkao', '丹高区'),
-('loc-mean-chey', 'loc-phnom-penh', 'district', 'មានជ័យ', 'Mean Chey', '棉芷区'),
-('loc-russey-keo-2', 'loc-phnom-penh', 'district', 'ឫស្សីកែវ', 'Russey Keo', '水净华区');
+('loc-mean-chey', 'loc-phnom-penh', 'district', 'មានជ័យ', 'Mean Chey', '棉芷区');
 
 -- Insert Siem Reap districts
 INSERT OR IGNORE INTO locations (id, parent_id, location_type, name_km, name_en, name_zh) VALUES
@@ -52,9 +51,9 @@ INSERT OR IGNORE INTO locations (id, parent_id, location_type, name_km, name_en,
 ('loc-pouk', 'loc-siem-reap', 'district', 'ពក', 'Pouk', '普克'),
 ('loc-prasat-bakong', 'loc-siem-reap', 'district', 'ប្រាសាទបាគង', 'Prasat Bakong', '巴空寺'),
 ('loc-soutr-nikom', 'loc-siem-reap', 'district', 'សូទ្រនិគម', 'Soutr Nikom', '索特尼科姆'),
-('loc-svay-leu', 'loc-siem-reap', 'district', 'ស្វាយលើ', 'Svay Leu', '斯维勒'),
--- Insert sample properties (demo data)
--- Note: These reference a demo user that should be created first
+('loc-svay-leu', 'loc-siem-reap', 'district', 'ស្វាយលើ', 'Svay Leu', '斯维勒');
+
+-- Insert demo users
 -- Password for demo user: 'demo1234' (hashed)
 INSERT OR IGNORE INTO users (id, name, email, phone, password_hash, role, status, verified, created_at, updated_at) VALUES
 ('user-demo-agent', 'Prop Tech Partner', 'agent@proptech.com.kh', '+85512345678', 'ZGVtbzEyMzRwcm9wLXRlY2gtc2FsdA==', 'agent', 'active', 1, unixepoch(), unixepoch()),
@@ -68,7 +67,7 @@ INSERT OR IGNORE INTO properties (id, owner_id, title, description, property_typ
 ('prop-4', 'user-demo-owner', 'Residential land plot', 'Land opportunity in a developing area. Please contact the advertiser for exact location and title details.', 'Land', 'sale', 'active', 85000, 'USD', 'Kandal', 'Kandal Province', 0, 0, 0, 300, '+85598123456', '', unixepoch(), unixepoch()),
 ('prop-5', 'user-demo-agent', 'Modern condo with balcony', 'Modern condo with natural light, shared amenities and easy city access', 'Condo', 'rent', 'active', 600, 'USD', 'Phnom Penh', 'Chamkar Mon', 2, 1, 75, 0, '+85512345678', '', unixepoch(), unixepoch());
 
--- Insert property images (using placeholder paths)
+-- Insert property images
 INSERT OR IGNORE INTO property_images (id, property_id, storage_path, sort_order, is_cover, created_at) VALUES
 ('img-1', 'prop-1', 'properties/demo/villa1.jpg', 0, 1, unixepoch()),
 ('img-2', 'prop-2', 'properties/demo/apartment1.jpg', 0, 1, unixepoch()),

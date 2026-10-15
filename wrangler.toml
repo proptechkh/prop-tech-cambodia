@@ -6,20 +6,20 @@ main = "worker/index.js"
 [[d1_databases]]
 binding = "DB"
 database_name = "prop-tech-db"
-database_id = "REPLACE_WITH_D1_ID"
+database_id = "51d00266-1261-4581-8825-ca2230d587ae"
 
 # KV for sessions and rate limiting
 [[kv_namespaces]]
 binding = "KV"
-id = "REPLACE_WITH_KV_ID"
+id = "0f6b076f38964e50a3297363f7e57984"
 
-# R2 for image storage
-[[r2_buckets]]
-binding = "BUCKET"
-bucket_name = "prop-tech-images"
+# R2 for image storage (create in dashboard first)
+# [[r2_buckets]]
+# binding = "BUCKET"
+# bucket_name = "prop-tech-images"
 
 # Environment variables
 [vars]
 ENVIRONMENT = "production"
-JWT_SECRET = "REPLACE_WITH_RANDOM_SECRET"
+JWT_SECRET = "prop-tech-cambodia-2026-secret-key-change-in-production"
 FROM_EMAIL = "noreply@prop-tech-cambodia.pages.dev"
