@@ -1,0 +1,16 @@
+{
+  "name": "prop-tech-cambodia",
+  "version": "1.0.0",
+  "description": "Prop Tech Cambodia - Cloudflare-native property marketplace PWA",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:generate": "wrangler d1 execute prop-tech-db --file=worker/schema.sql",
+    "db:seed": "wrangler d1 execute prop-tech-db --file=worker/seed.sql",
+    "preview": "wrangler pages dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
