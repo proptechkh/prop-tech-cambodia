@@ -1,7 +1,7 @@
 // Prop Tech Cambodia - Production Frontend
 // Uses Cloudflare Workers API for all backend operations
 
-const API_BASE = '/api';
+const API_BASE = 'https://prop-tech-cambodia.genzkh855.workers.dev/api';
 
 // ==================== STATE ====================
 let currentUser = null;

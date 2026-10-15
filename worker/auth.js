@@ -1,14 +1,14 @@
 import { jsonResponse, errorResponse, generateId, generateOTP, sanitizeString, validateEmail, validatePhone, getAuthToken } from './utils.js';
 
 // Simple JWT implementation using Web Crypto API
-async function createToken(payload, secret) {
+export async function createToken(payload, secret) {
   const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
   const body = btoa(JSON.stringify({ ...payload, exp: Date.now() + 24 * 60 * 60 * 1000 }));
   const signature = await hmacSHA256(`${header}.${body}`, secret);
   return `${header}.${body}.${signature}`;
 }
 
-async function verifyToken(token, secret) {
+export async function verifyToken(token, secret) {
   try {
     const [header, body, signature] = token.split('.');
     const expectedSig = await hmacSHA256(`${header}.${body}`, secret);
