@@ -34,53 +34,11 @@ export async function handleProperties(request, env, path, method, url) {
 async function listProperties(request, env, url) {
   const params = url.searchParams;
   const mode = params.get('mode') || 'sale';
-  const type = params.get('type') || '';
-  const location = params.get('location') || '';
-  const minPrice = parseFloat(params.get('minPrice')) || 0;
-  const maxPrice = parseFloat(params.get('maxPrice')) || 999999999;
-  const page = parseInt(params.get('page')) || 1;
-  const limit = Math.min(parseInt(params.get('limit')) || 20, 50);
-  const offset = (page - 1) * limit;
 
-  let query = `
-    SELECT p.*, u.name as owner_name, u.phone as owner_phone, u.telegram_username,
-           pt.title as translated_title, pt.description as translated_description
-    FROM properties p
-    JOIN users u ON p.owner_id = u.id
-    LEFT JOIN property_translations pt ON p.id = pt.property_id AND pt.language_code = ?
-    WHERE p.status = 'active' AND p.listing_type = ?
-  `;
-  const paramsArr = [params.get('lang') || 'en', mode];
-
-  if (type) {
-    query += ' AND p.property_type = ?';
-    paramsArr.push(type);
-  }
-
-  if (location) {
-    query += ' AND (p.address_text LIKE ? OR p.city LIKE ?)';
-    paramsArr.push(`%${location}%`, `%${location}%`);
-  }
-
-  query += ' AND p.price BETWEEN ? AND ?';
-  paramsArr.push(minPrice, maxPrice);
-
-  query += ' ORDER BY p.created_at DESC LIMIT ? OFFSET ?';
-  paramsArr.push(limit, offset);
-
-  const properties = await env.DB.prepare(query).bind(...paramsArr).all();
-
-  // Get total count
-  const countQuery = `
-    SELECT COUNT(*) as total FROM properties p
-    WHERE p.status = 'active' AND p.listing_type = ?
-  `;
-  const countParams = [mode];
-  if (type) {
-    countQuery.replace('WHERE', 'WHERE p.property_type = ? AND');
-    countParams.push(type);
-  }
-  const countResult = await env.DB.prepare(countQuery).bind(...countParams).first();
+  // Simple query - no JOINs to isolate issues
+  const properties = await env.DB.prepare(
+    "SELECT * FROM properties WHERE status = 'active' AND listing_type = ? ORDER BY created_at DESC LIMIT 20"
+  ).bind(mode).all();
 
   // Get images for each property
   const propertyIds = properties.results.map(p => p.id);
@@ -94,26 +52,21 @@ async function listProperties(request, env, url) {
 
   // Map images to properties
   const imageMap = {};
-  images.results.forEach(img => {
-    if (!imageMap[img.property_id]) imageMap[img.property_id] = [];
-    imageMap[img.property_id].push(img);
-  });
+  if (images && images.results) {
+    images.results.forEach(img => {
+      if (!imageMap[img.property_id]) imageMap[img.property_id] = [];
+      imageMap[img.property_id].push(img);
+    });
+  }
 
   const enriched = properties.results.map(p => ({
     ...p,
     images: imageMap[p.id] || [],
-    title: p.translated_title || p.title,
-    description: p.translated_description || p.description,
   }));
 
   return jsonResponse({
     properties: enriched,
-    pagination: {
-      page,
-      limit,
-      total: countResult?.total || 0,
-      totalPages: Math.ceil((countResult?.total || 0) / limit),
-    },
+    pagination: { page: 1, limit: 20, total: properties.results.length, totalPages: 1 },
   });
 }
 
