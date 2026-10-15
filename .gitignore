@@ -33,3 +33,7 @@ npm-debug.log*
 tmp/
 temp/
 *.tmp
+
+# Wrangler
+.wrangler/
+node_modules/
