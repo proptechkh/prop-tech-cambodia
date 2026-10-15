@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#1747c8"><meta name="description" content="Find property to buy or rent in Cambodia with Prop Tech.">
+  <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg">
+  <title>Prop Tech Cambodia</title><link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" onclick="showPage('home');return false"><span class="brand-mark">PT</span><span><b>Prop Tech</b><small>CAMBODIA</small></span></a>
+    <div class="header-actions"><select id="language" aria-label="Language"><option value="km">ខ្មែរ</option><option value="en" selected>English</option><option value="zh-CN">中文</option></select><button class="icon-btn" id="installBtn" hidden>＋ Install</button><button class="primary small" id="accountBtn" onclick="showPage('account')">Sign in</button></div>
+  </header>
+  <main>
+    <section id="homePage" class="page">
+      <div class="hero">
+        <div class="hero-copy"><span class="eyebrow" data-i18n="eyebrow">CAMBODIA PROPERTY MARKETPLACE</span><h1 data-i18n="heroTitle">Find a place<br>to call <em>home.</em></h1><p data-i18n="heroText">Explore homes, land and commercial properties across Cambodia.</p></div>
+        <div class="search-card">
+          <div class="segmented"><button class="active" data-mode="sale" data-i18n="buy">Buy</button><button data-mode="rent" data-i18n="rent">Rent</button></div>
+          <label data-i18n="location">Location</label><input id="searchLocation" placeholder="Province, district or area">
+          <label data-i18n="propertyType">Property type</label><select id="searchType"><option value="" data-i18n="allTypes">All property types</option><option>House</option><option>Villa</option><option>Condo</option><option>Apartment</option><option>Land</option><option>Shophouse</option><option>Commercial</option></select>
+          <div class="two-fields"><div><label data-i18n="minPrice">Min price ($)</label><input id="minPrice" type="number" min="0" placeholder="0"></div><div><label data-i18n="maxPrice">Max price ($)</label><input id="maxPrice" type="number" min="0" placeholder="Any"></div></div>
+          <button class="primary full" onclick="applySearch()" data-i18n="search">Search properties</button>
+        </div>
+      </div>
+      <section class="content-section">
+        <div class="section-head"><div><span class="eyebrow" data-i18n="browse">BROWSE</span><h2 data-i18n="popularTypes">Explore property types</h2></div><button class="text-btn" onclick="clearSearch()" data-i18n="clearFilters">Clear filters</button></div>
+        <div class="category-grid">
+          <button class="category" onclick="quickType('House')"><span>⌂</span><b data-i18n="house">House</b></button><button class="category" onclick="quickType('Condo')"><span>▥</span><b data-i18n="condo">Condo</b></button><button class="category" onclick="quickType('Land')"><span>♧</span><b data-i18n="land">Land</b></button><button class="category" onclick="quickType('Villa')"><span>⌂</span><b data-i18n="villa">Villa</b></button><button class="category" onclick="quickType('Commercial')"><span>▤</span><b data-i18n="commercial">Commercial</b></button>
+        </div>
+      </section>
+      <section class="content-section listings-section"><div class="section-head"><div><span class="eyebrow" data-i18n="curated">FIND YOUR NEXT MOVE</span><h2 id="listingHeading" data-i18n="latestListings">Latest properties</h2></div><span id="resultCount" class="muted"></span></div><div id="listingGrid" class="listing-grid"></div><div id="emptyState" class="empty-state" hidden><span>⌕</span><h3 data-i18n="noResults">No properties found</h3><p data-i18n="tryFilters">Try changing your search filters.</p></div></section>
+      <section class="cta-band"><div><span class="eyebrow">PROP TECH</span><h2 data-i18n="haveProperty">Have a property to sell or rent?</h2><p data-i18n="postCTA">Reach people looking for their next home.</p></div><button class="primary light" onclick="showPage('post')" data-i18n="postProperty">＋ Post a property</button></section>
+    </section>
+    <section id="detailPage" class="page" hidden><button class="back-btn" onclick="showPage('home')">← <span data-i18n="backToSearch">Back to search</span></button><div id="detailContent"></div></section>
+    <section id="accountPage" class="page narrow" hidden><div class="panel"><span class="eyebrow" data-i18n="yourAccount">YOUR ACCOUNT</span><h1 data-i18n="welcome">Welcome to Prop Tech</h1><p class="muted" data-i18n="accountDemo">Demo account mode. Production login requires the configured secure backend.</p><div id="accountForm"><label data-i18n="fullName">Full name</label><input id="authName" placeholder="Your name"><label data-i18n="phone">Phone number</label><input id="authPhone" placeholder="+855 ..."><label data-i18n="role">I am a</label><select id="authRole"><option value="owner" data-i18n="owner">Property owner</option><option value="agent" data-i18n="agent">Sales agent</option></select><label data-i18n="email">Email (optional for demo)</label><input id="authEmail" type="email" placeholder="you@example.com"><button class="primary full" onclick="demoSignIn()" data-i18n="continue">Continue</button></div><div id="signedIn" hidden></div></div></section>
+    <section id="postPage" class="page narrow" hidden><button class="back-btn" onclick="showPage('home')">← <span data-i18n="back">Back</span></button><div class="panel"><span class="eyebrow" data-i18n="newListing">NEW LISTING</span><h1 data-i18n="postTitle">Post a property</h1><p class="muted" data-i18n="postIntro">Fill in the essentials. Your listing appears immediately after validation.</p><div class="step-line"><span></span><span></span><span></span><span></span><span></span></div>
+      <form id="postForm">
+        <label data-i18n="listingType">Listing type *</label><div class="segmented form-segment"><button type="button" class="active" data-postmode="sale" data-i18n="forSale">For sale</button><button type="button" data-postmode="rent" data-i18n="forRent">For rent</button></div>
+        <label data-i18n="titleLabel">Property title *</label><input id="pTitle" required maxlength="100" placeholder="e.g. Modern villa near the city">
+        <label data-i18n="description">Description</label><textarea id="pDescription" rows="3" placeholder="Describe the property, access and nearby places"></textarea>
+        <div class="two-fields"><div><label data-i18n="propertyType">Property type *</label><select id="pType" required><option>House</option><option>Villa</option><option>Condo</option><option>Apartment</option><option>Land</option><option>Shophouse</option><option>Commercial</option></select></div><div><label data-i18n="priceLabel">Price (USD) *</label><input id="pPrice" required type="number" min="1" step="1" placeholder="125000"></div></div>
+        <label data-i18n="province">Province / city *</label><input id="pLocation" required placeholder="e.g. Phnom Penh, BKK1">
+        <div class="two-fields"><div><label data-i18n="bedrooms">Bedrooms</label><input id="pBeds" type="number" min="0" placeholder="3"></div><div><label data-i18n="bathrooms">Bathrooms</label><input id="pBaths" type="number" min="0" placeholder="2"></div></div>
+        <div class="two-fields"><div><label data-i18n="floorArea">Floor area (m²)</label><input id="pArea" type="number" min="0" placeholder="120"></div><div><label data-i18n="contactPhone">Contact phone *</label><input id="pPhone" required type="tel" placeholder="+855 ..."></div></div>
+        <label data-i18n="telegram">Telegram username or link (optional)</label><input id="pTelegram" placeholder="@username or https://t.me/username">
+        <label data-i18n="photos">Photos (up to 5 in this demo)</label><input id="pPhotos" type="file" accept="image/*" multiple>
+        <p class="hint" data-i18n="photoHint">Demo note: selected photos are stored locally in this browser. A production build uploads images to protected cloud storage.</p>
+        <label class="check-row"><input id="pConfirm" type="checkbox" required><span data-i18n="confirmOwnership">I confirm that I am authorized to advertise this property.</span></label>
+        <button class="primary full" type="submit" data-i18n="publish">Publish property now</button>
+      </form>
+    </div></section>
+    <section id="myListingsPage" class="page" hidden><div class="section-head"><div><span class="eyebrow" data-i18n="yourAccount">YOUR ACCOUNT</span><h1 data-i18n="myListings">My listings</h1></div><button class="primary" onclick="showPage('post')" data-i18n="postProperty">＋ Post a property</button></div><div id="myListings"></div></section>
+    <section id="savedPage" class="page" hidden><div class="section-head"><div><span class="eyebrow" data-i18n="yourAccount">YOUR ACCOUNT</span><h1 data-i18n="savedProperties">Saved properties</h1></div></div><div id="savedListings" class="listing-grid"></div></section>
+    <section id="adminPage" class="page" hidden><div class="section-head"><div><span class="eyebrow">CONTROL CENTER</span><h1>Admin dashboard</h1></div><span class="admin-pill">ADMIN DEMO</span></div><div class="stats-grid" id="adminStats"></div><div class="admin-tabs"><button class="active" data-admin-tab="listings">Listings</button><button data-admin-tab="reports">Reports <span id="reportBadge"></span></button><button data-admin-tab="users">Users</button></div><div id="adminContent"></div></section>
+  </main>
+  <nav class="bottom-nav" aria-label="Main navigation"><button class="nav-item active" onclick="showPage('home')"><span>⌂</span><small data-i18n="home">Home</small></button><button class="nav-item" onclick="showPage('home');document.getElementById('searchLocation').focus()"><span>⌕</span><small data-i18n="searchNav">Search</small></button><button class="nav-item post-nav" onclick="showPage('post')"><span>＋</span><small data-i18n="postNav">Post</small></button><button class="nav-item" onclick="showPage('saved')"><span>♡</span><small data-i18n="savedNav">Saved</small></button><button class="nav-item" onclick="showPage('account')"><span>♙</span><small data-i18n="accountNav">Account</small></button></nav>
+  <footer><span>© <span id="year"></span> Prop Tech Cambodia</span><span data-i18n="footerText">Buy · Sell · Rent with confidence</span><button class="text-btn" onclick="showPage('admin')">Admin demo</button></footer>
+  <div id="toast" role="status" class="toast" hidden></div>
+  <script src="./app.js"></script>
+</body></html>
