@@ -56,8 +56,8 @@ INSERT OR IGNORE INTO locations (id, parent_id, location_type, name_km, name_en,
 -- Insert demo users
 -- Password for demo user: 'demo1234' (hashed)
 INSERT OR IGNORE INTO users (id, name, email, phone, password_hash, role, status, verified, created_at, updated_at) VALUES
-('user-demo-agent', 'Prop Tech Partner', 'agent@proptech.com.kh', '+85512345678', 'ZGVtbzEyMzRwcm9wLXRlY2gtc2FsdA==', 'agent', 'active', 1, unixepoch(), unixepoch()),
-('user-demo-owner', 'Property Owner', 'owner@proptech.com.kh', '+85598123456', 'ZGVtbzEyMzRwcm9wLXRlY2gtc2FsdA==', 'owner', 'active', 1, unixepoch(), unixepoch());
+('user-demo-agent', 'Prop Tech Partner', 'agent@proptech.com.kh', '+85512345678', 'vWCdRN6z3Z5eGB4dDigC44Vhkkx2wtsjHLEhZJqflYE=', 'agent', 'active', 1, unixepoch(), unixepoch()),
+('user-demo-owner', 'Property Owner', 'owner@proptech.com.kh', '+85598123456', 'vWCdRN6z3Z5eGB4dDigC44Vhkkx2wtsjHLEhZJqflYE=', 'owner', 'active', 1, unixepoch(), unixepoch());
 
 -- Insert sample properties
 INSERT OR IGNORE INTO properties (id, owner_id, title, description, property_type, listing_type, status, price, currency, city, address_text, bedrooms, bathrooms, floor_area, land_area, contact_phone, telegram, created_at, updated_at) VALUES
