@@ -126,37 +126,82 @@
         <div id="accountForm">
           <input type="hidden" id="authFormMode" value="login">
 
-          <div id="authNameField" style="display:none">
-            <label data-i18n="name">Full name</label>
-            <input id="authName" placeholder="Your name">
+          <div id="authNameField" class="form-group" style="display:none">
+            <label for="authName" data-i18n="name">Full name</label>
+            <div class="input-group">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input id="authName" type="text" placeholder="Your full name" autocomplete="name">
+            </div>
           </div>
 
-          <label data-i18n="email">Email</label>
-          <input id="authEmail" type="email" placeholder="you@example.com" required>
-
-          <div id="authPhoneField" style="display:none">
-            <label data-i18n="phone">Phone number</label>
-            <input id="authPhone" type="tel" placeholder="+855 ...">
+          <div class="form-group">
+            <label for="authEmail" data-i18n="email">Email address</label>
+            <div class="input-group">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+              <input id="authEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
+            </div>
           </div>
 
-          <label data-i18n="password">Password</label>
-          <input id="authPassword" type="password" placeholder="••••••••" required>
-
-          <div id="authConfirmField" style="display:none">
-            <label data-i18n="confirmPassword">Confirm password</label>
-            <input id="authConfirm" type="password" placeholder="••••••••">
+          <div id="authPhoneField" class="form-group" style="display:none">
+            <label for="authPhone" data-i18n="phone">Phone number</label>
+            <div class="input-group">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <input id="authPhone" type="tel" placeholder="+855 12 345 678" autocomplete="tel">
+            </div>
           </div>
 
-          <div id="authRoleField" style="display:none">
+          <div class="form-group">
+            <label for="authPassword" data-i18n="password">Password</label>
+            <div class="input-group">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input id="authPassword" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+              <button type="button" class="password-toggle" onclick="togglePassword('authPassword', this)" aria-label="Show password">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div id="passwordStrength" class="password-strength" style="display:none">
+              <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+              <span class="strength-text" id="strengthText"></span>
+            </div>
+          </div>
+
+          <div id="authConfirmField" class="form-group" style="display:none">
+            <label for="authConfirm" data-i18n="confirmPassword">Confirm password</label>
+            <div class="input-group">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input id="authConfirm" type="password" placeholder="Confirm your password" autocomplete="new-password">
+              <button type="button" class="password-toggle" onclick="togglePassword('authConfirm', this)" aria-label="Show password">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div id="authRoleField" class="form-group" style="display:none">
             <label data-i18n="role">I am a</label>
-            <select id="authRole">
-              <option value="owner" data-i18n="owner">Property owner</option>
-              <option value="agent" data-i18n="agent">Sales agent</option>
-            </select>
+            <div class="role-cards">
+              <button type="button" class="role-card active" data-role="owner" onclick="selectRole('owner')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span data-i18n="owner">Property owner</span>
+              </button>
+              <button type="button" class="role-card" data-role="agent" onclick="selectRole('agent')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+                <span data-i18n="agent">Sales agent</span>
+              </button>
+            </div>
+            <input type="hidden" id="authRole" value="owner">
           </div>
 
-          <button class="primary full" id="authSubmitBtn" data-i18n="signIn">Sign in</button>
-          <p class="muted" style="text-align:center;margin-top:12px">
+          <button class="primary full btn-with-icon" id="authSubmitBtn" data-i18n="signIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            <span>Sign in</span>
+          </button>
+
+          <div class="auth-divider">
+            <span>or</span>
+          </div>
+
+          <p class="auth-switch">
+            <span id="authToggleText">Don't have an account?</span>
             <a href="#" id="authToggle" onclick="return false" data-i18n="signUp">Sign up</a>
           </p>
         </div>

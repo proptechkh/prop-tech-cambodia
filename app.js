@@ -766,13 +766,119 @@ document.getElementById('authToggle').addEventListener('click', () => {
   document.getElementById('authPhoneField').style.display = isLogin ? 'block' : 'none';
   document.getElementById('authRoleField').style.display = isLogin ? 'block' : 'none';
   document.getElementById('authConfirmField').style.display = isLogin ? 'block' : 'none';
-  document.getElementById('authSubmitBtn').textContent = isLogin ? t('signUp') : t('signIn');
+  document.getElementById('authSubmitBtn span').textContent = isLogin ? t('signUp') : t('signIn');
   document.getElementById('authToggleText').textContent = isLogin ? t('signIn') : t('signUp');
+  // Reset password strength
+  document.getElementById('passwordStrength').style.display = 'none';
+  document.getElementById('strengthFill').className = 'strength-fill';
+  document.getElementById('strengthFill').style.width = '0';
+  document.getElementById('strengthText').textContent = '';
 });
+
+// Password toggle
+function togglePassword(inputId, btn) {
+  const input = document.getElementById(inputId);
+  const isPassword = input.type === 'password';
+  input.type = isPassword ? 'text' : 'password';
+  btn.innerHTML = isPassword
+    ? '<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24\"/><line x1=\"1\" y1=\"1\" x2=\"23\" y2=\"23\"/></svg>'
+    : '<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/></svg>';
+  btn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+}
+
+// Password strength checker
+function checkPasswordStrength(password) {
+  const strengthEl = document.getElementById('passwordStrength');
+  const fillEl = document.getElementById('strengthFill');
+  const textEl = document.getElementById('strengthText');
+
+  if (!password) {
+    strengthEl.style.display = 'none';
+    return;
+  }
+
+  strengthEl.style.display = 'block';
+  let strength = 0;
+  if (password.length >= 8) strength++;
+  if (password.length >= 12) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+  fillEl.className = 'strength-fill';
+  if (strength <= 2) {
+    fillEl.classList.add('weak');
+    textEl.className = 'strength-text weak';
+    textEl.textContent = 'Weak password';
+  } else if (strength <= 3) {
+    fillEl.classList.add('medium');
+    textEl.className = 'strength-text medium';
+    textEl.textContent = 'Medium strength';
+  } else {
+    fillEl.classList.add('strong');
+    textEl.className = 'strength-text strong';
+    textEl.textContent = 'Strong password';
+  }
+}
+
+// Role card selection
+function selectRole(role) {
+  document.getElementById('authRole').value = role;
+  document.querySelectorAll('.role-card').forEach(card => {
+    card.classList.toggle('active', card.dataset.role === role);
+  });
+}
+
+// Password strength listener
+document.getElementById('authPassword').addEventListener('input', (e) => {
+  checkPasswordStrength(e.target.value);
+});
+
+// Form validation
+function validateAuthForm(isLogin) {
+  let valid = true;
+  const email = document.getElementById('authEmail');
+  const password = document.getElementById('authPassword');
+
+  // Reset errors
+  email.classList.remove('error');
+  password.classList.remove('error');
+
+  if (!email.value.trim() || !email.value.includes('@')) {
+    email.classList.add('error');
+    valid = false;
+  }
+  if (!password.value || password.value.length < 6) {
+    password.classList.add('error');
+    valid = false;
+  }
+
+  if (!isLogin) {
+    const name = document.getElementById('authName');
+    const phone = document.getElementById('authPhone');
+    const confirm = document.getElementById('authConfirm');
+
+    name.classList.remove('error');
+    phone.classList.remove('error');
+    confirm.classList.remove('error');
+
+    if (!name.value.trim()) { name.classList.add('error'); valid = false; }
+    if (!phone.value.trim()) { phone.classList.add('error'); valid = false; }
+    if (confirm.value !== password.value) { confirm.classList.add('error'); valid = false; }
+  }
+
+  return valid;
+}
 
 document.getElementById('authForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const isLogin = document.getElementById('authFormMode').value === 'login';
+
+  if (!validateAuthForm(isLogin)) {
+    toast('Please fix the errors above', true);
+    return;
+  }
+
   try {
     if (isLogin) {
       const email = document.getElementById('authEmail').value.trim();
