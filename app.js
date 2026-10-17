@@ -873,7 +873,7 @@ function validateAuthForm(isLogin) {
   return valid;
 }
 
-document.getElementById('authForm').addEventListener('submit', async (e) => {
+document.getElementById('accountForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const isLogin = document.getElementById('authFormMode').value === 'login';
 
