@@ -759,15 +759,18 @@ document.querySelectorAll('[data-admin-tab]').forEach(b => b.addEventListener('c
 }));
 
 // Auth form toggle
-document.getElementById('authToggle').addEventListener('click', () => {
+document.getElementById('authToggle').addEventListener('click', (e) => {
+  e.preventDefault();
   const isLogin = document.getElementById('authFormMode').value === 'login';
-  document.getElementById('authFormMode').value = isLogin ? 'signup' : 'login';
+  const newMode = isLogin ? 'signup' : 'login';
+  document.getElementById('authFormMode').value = newMode;
   document.getElementById('authNameField').style.display = isLogin ? 'block' : 'none';
   document.getElementById('authPhoneField').style.display = isLogin ? 'block' : 'none';
   document.getElementById('authRoleField').style.display = isLogin ? 'block' : 'none';
   document.getElementById('authConfirmField').style.display = isLogin ? 'block' : 'none';
-  document.getElementById('authSubmitBtn span').textContent = isLogin ? t('signUp') : t('signIn');
-  document.getElementById('authToggleText').textContent = isLogin ? t('signIn') : t('signUp');
+  document.getElementById('authBtnText').textContent = isLogin ? 'Sign up' : 'Sign in';
+  document.getElementById('authToggleText').textContent = isLogin ? 'Already have an account?' : "Don't have an account?";
+  document.getElementById('authToggle').textContent = isLogin ? 'Sign in' : 'Sign up';
   // Reset password strength
   document.getElementById('passwordStrength').style.display = 'none';
   document.getElementById('strengthFill').className = 'strength-fill';

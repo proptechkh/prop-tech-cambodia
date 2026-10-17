@@ -191,9 +191,9 @@
             <input type="hidden" id="authRole" value="owner">
           </div>
 
-          <button class="primary full btn-with-icon" id="authSubmitBtn" data-i18n="signIn">
+          <button class="primary full btn-with-icon" id="authSubmitBtn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-            <span>Sign in</span>
+            <span id="authBtnText">Sign in</span>
           </button>
 
           <div class="auth-divider">
@@ -202,7 +202,7 @@
 
           <p class="auth-switch">
             <span id="authToggleText">Don't have an account?</span>
-            <a href="#" id="authToggle" onclick="return false" data-i18n="signUp">Sign up</a>
+            <a href="#" id="authToggle" onclick="return false">Sign up</a>
           </p>
         </div>
 
