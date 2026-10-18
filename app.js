@@ -37,7 +37,7 @@ const I18N = {
     listingType: "Listing type *", forSale: "For sale", forRent: "For rent",
     titleLabel: "Property title *", description: "Description", priceLabel: "Price (USD) *",
     province: "Province / city *", bedrooms: "Bedrooms", bathrooms: "Bathrooms",
-    floorArea: "Floor area (m2)", contactPhone: "Contact phone *",
+    floorArea: "Floor area (m²)", contactPhone: "Contact phone *",
     telegram: "Telegram username or link (optional)", photos: "Photos (up to 5)",
     photoHint: "Upload up to 5 photos. First photo will be the cover image.",
     confirmOwnership: "I confirm that I am authorized to advertise this property.",
@@ -73,7 +73,7 @@ const I18N = {
     unauthorized: "Please sign in to continue", forbidden: "Access denied",
     rateLimited: "Too many requests. Please slow down.",
     verifyEmail: "Please verify your email before posting.",
-    otpSent: "Verification code sent to your email",
+    otpSent: "Verification code sent to your phone",
     otpInvalid: "Invalid or expired verification code",
     otpRequired: "Verification code is required",
   },
@@ -97,7 +97,7 @@ const I18N = {
     listingType: "ប្រភេទប្រកាស *", forSale: "សម្រាប់លក់", forRent: "សម្រាប់ជួល",
     titleLabel: "ចំណងជើងអចលនទ្រព្យ *", description: "ការពិពណ៌នា", priceLabel: "តម្លៃ (USD) *",
     province: "ខេត្ត / ក្រុង *", bedrooms: "បន្ទប់គេង", bathrooms: "បន្ទប់ទឹក",
-    floorArea: "ទំហំជាន់ (m2)", contactPhone: "លេខទំនាក់ទំនង *",
+    floorArea: "ទំហំជាន់ (m²)", contactPhone: "លេខទំនាក់ទំនង *",
     telegram: "ឈ្មោះ ឬតំណ Telegram (ជាជម្រើស)", photos: "រូបភាព (អតិបរមា 5)",
     photoHint: "ផ្ទុករូបភាពបានរហូតដល់ 5 រូប។ រូបដំបូងនឹងជារូបកំពូល។",
     confirmOwnership: "ខ្ញុំបញ្ជាក់ថាមានសិទ្ធិផ្សព្វផ្សាយអចលនទ្រព្យនេះ។",
@@ -201,7 +201,7 @@ const I18N = {
   }
 };
 
-const t = (k) => I18N.en[k] || k;
+const t = (k) => (I18N[document.getElementById('language')?.value || 'en'] || I18N.en)[k] || I18N.en[k] || k;
 
 // ==================== API HELPERS ====================
 async function api(endpoint, options = {}) {
