@@ -201,7 +201,7 @@ const I18N = {
   }
 };
 
-const t = (k) => (I18N[document.getElementById('language')?.value || 'en'] || I18N.en)[k] || I18N.en[k] || k;
+const t = (k) => I18N.en[k] || k;
 
 // ==================== API HELPERS ====================
 async function api(endpoint, options = {}) {
@@ -976,12 +976,7 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
 });
 
 // Language
-document.getElementById('language').addEventListener('change', () => {
-  document.documentElement.lang = document.getElementById('language').value;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (t(key)) el.textContent = t(key);
-  });
+
   renderListings();
   if (currentUser) renderAccount();
 });
@@ -1013,6 +1008,16 @@ window.addEventListener('hashchange', () => {
 });
 
 // ==================== INIT ====================
+document.getElementById('language').addEventListener('change', () => {
+  document.documentElement.lang = document.getElementById('language').value;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t(key)) el.textContent = t(key);
+  });
+  renderListings();
+  if (currentUser) renderAccount();
+});
+
 document.getElementById('year').textContent = new Date().getFullYear();
 updateAuthUI();
 document.documentElement.lang = 'en';
