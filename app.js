@@ -22,7 +22,7 @@ const I18N = {
     heroText: "Explore homes, land and commercial properties across Cambodia.",
     buy: "Buy", rent: "Rent", location: "Location", propertyType: "Property type",
     allTypes: "All property types", minPrice: "Min price ($)", maxPrice: "Max price ($)",
-    search: "Search properties", browse: "BROWSE", popularTypes: "Explore property types",
+    search: "Search", browse: "BROWSE", popularTypes: "Explore property types",
     clearFilters: "Clear filters", house: "House", condo: "Condo", land: "Land",
     villa: "Villa", commercial: "Commercial", curated: "FIND YOUR NEXT MOVE",
     latestListings: "Latest properties", noResults: "No properties found",
@@ -62,7 +62,7 @@ const I18N = {
     listings: "Listings", reports: "Reports", contact: "Contact", status: "Status",
     ownerAgent: "Owner / Agent", adminDashboard: "Admin Dashboard", totalListings: "Total listings",
     activeListings: "Active listings", totalUsers: "Total users", openReports: "Open reports",
-    viewAll: "View all", noReports: "No open reports", noUsers: "No users yet",
+    viewAll: "View all", noReports: "No open reports", noUsers: "No users yet", share: "Share",
     userSuspended: "User suspended", userActivated: "User activated",
     resolveReport: "Resolve", dismissReport: "Dismiss", removeListing: "Remove",
     restoreListing: "Restore", hideListing: "Hide", viewProperty: "View",
@@ -973,12 +973,6 @@ document.getElementById('postForm').addEventListener('submit', async (e) => {
   } catch (e) {
     toast(e.message || t('error'), true);
   }
-});
-
-// Language
-
-  renderListings();
-  if (currentUser) renderAccount();
 });
 
 // Service worker
