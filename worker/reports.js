@@ -1,4 +1,4 @@
-import { jsonResponse, errorResponse, generateId, sanitizeString, getAuthToken } from './utils.js';
+import { jsonResponse, errorResponse, generateId, sanitizeString } from './utils.js';
 import { verifyToken } from './auth.js';
 
 export async function handleReports(request, env, path, method) {

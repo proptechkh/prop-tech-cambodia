@@ -49,8 +49,12 @@ export default {
         return corsResponse({ status: 'ok', timestamp: Date.now() });
       }
 
-      // Auth routes
+      // Auth routes (stricter rate limit: 10 per minute)
       if (path.startsWith('/api/auth/')) {
+        const authRate = await rateLimit(env.KV, clientIP + ':auth', path, 10);
+        if (!authRate.allowed) {
+          return errorResponse('Too many attempts. Please try again later.', 429);
+        }
         return handleAuth(request, env, path, method);
       }
 

@@ -600,8 +600,8 @@ function renderAccount() {
 // ==================== MY LISTINGS ====================
 async function renderMyListings() {
   if (!currentUser) { showPage('account'); return; }
-  const data = await api(`/properties?owner_id=${currentUser.id}&limit=100`);
-  const items = data.properties;
+  const data = await api(`/properties?limit=100`);
+  const items = data.properties.filter(p => p.owner_id === currentUser.id);
   document.getElementById('myListings').innerHTML = items.length ? items.map(p => `
     <div class="my-row">
       <img src="${safe(p.images?.[0]?.storage_path || '')}" alt="">

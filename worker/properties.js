@@ -1,5 +1,5 @@
-import { jsonResponse, errorResponse, generateId, sanitizeString, getAuthToken } from './utils.js';
-import { createToken, verifyToken } from './auth.js';
+import { jsonResponse, errorResponse, generateId, sanitizeString } from './utils.js';
+import { verifyToken } from './auth.js';
 
 export async function handleProperties(request, env, path, method, url) {
   // GET /api/properties - List properties

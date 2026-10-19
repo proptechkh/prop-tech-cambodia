@@ -1,4 +1,4 @@
-import { jsonResponse, errorResponse, generateId, getAuthToken } from './utils.js';
+import { jsonResponse, errorResponse, getAuthToken } from './utils.js';
 import { verifyToken } from './auth.js';
 
 export async function handleFavorites(request, env, path, method) {

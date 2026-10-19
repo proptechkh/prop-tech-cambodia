@@ -21,5 +21,5 @@ id = "0f6b076f38964e50a3297363f7e57984"
 # Environment variables
 [vars]
 ENVIRONMENT = "production"
-JWT_SECRET = "prop-tech-cambodia-2026-secret-key-change-in-production"
+JWT_SECRET = "xK9mP2vL7nQ4wR8tY3uI6oA1sF5gH0jD9cE2bN4mZ7xW3qV6rU8yT1iP5oL9kJ2hG4f"
 FROM_EMAIL = "noreply@prop-tech-cambodia.pages.dev"
